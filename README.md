@@ -323,6 +323,21 @@ https://showroom-nuclear-qualifier.ngrok-free.dev
 Use the generated URL on any device with internet access.
 
 ---
+# Deployment and Remote Access
+
+The PrivAIMin web application was developed using Streamlit and accessed through a web browser.
+
+For remote testing and demonstration purposes, ngrok was used to expose the locally hosted Streamlit application to the internet. This allowed the system to be accessed from external devices such as smartphones, tablets, and laptops without requiring cloud deployment.
+
+To create a public link, the following command was used:
+
+```bash
+ngrok http 8501
+```
+
+Ngrok generated a temporary public URL that securely forwarded requests to the local Streamlit server, enabling remote access to the attendance management system for testing and presentation purposes.
+
+---
 
 # Dataset
 
@@ -332,7 +347,7 @@ Example:
 
 ```text
 my_dataset/
-├── Ahmed/
+├── Rand/
 ├── Fatma/
 ├── Shaima/
 └── ...
