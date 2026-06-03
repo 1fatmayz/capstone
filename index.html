@@ -2,44 +2,159 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PrivAIMin Links</title>
+
 <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
 body{
-    font-family: Arial, sans-serif;
-    background:#f7faf7;
-    text-align:center;
-    padding-top:100px;
-}
-h1{
-    color:#4f7f58;
-}
-.btn{
-    display:block;
-    width:320px;
-    margin:20px auto;
-    padding:18px;
+    min-height:100vh;
     background:#7BAE7F;
-    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.card{
+    width:760px;
+    max-width:90%;
+    background:#f8faf8;
+    padding:65px 80px;
+    border-radius:6px;
+    box-shadow:0 30px 70px rgba(0,0,0,0.18);
+}
+
+h1{
+    color:#1f2d2a;
+    font-size:28px;
+    letter-spacing:1px;
+    margin-bottom:8px;
+}
+
+.line{
+    width:28px;
+    height:5px;
+    background:#7BAE7F;
+    border-radius:10px;
+    margin-bottom:40px;
+}
+
+.options{
+    display:flex;
+    gap:28px;
+    justify-content:center;
+    margin-bottom:40px;
+}
+
+.option{
+    width:190px;
+    height:155px;
+    border-radius:28px;
+    background:white;
     text-decoration:none;
-    border-radius:12px;
-    font-size:20px;
+    color:#1f2d2a;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 15px 35px rgba(0,0,0,0.08);
+    transition:0.25s;
+}
+
+.option:hover{
+    transform:translateY(-6px);
+    background:#eaf4ec;
+}
+
+.option.active{
+    background:linear-gradient(135deg,#7BAE7F,#2f6b4f);
+    color:white;
+    box-shadow:0 20px 45px rgba(47,107,79,0.35);
+}
+
+.icon{
+    font-size:38px;
+    margin-bottom:18px;
+}
+
+.option span{
+    font-size:16px;
+    font-weight:bold;
+}
+
+.bottom{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+}
+
+.back{
+    width:130px;
+    padding:14px;
+    border-radius:30px;
+    border:none;
+    background:white;
+    color:#9aa39c;
+    font-weight:bold;
+}
+
+.next{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:none;
+    background:#2f6b4f;
+    color:white;
+    font-size:28px;
+    cursor:pointer;
+    box-shadow:0 12px 28px rgba(47,107,79,0.35);
+}
+
+@media(max-width:700px){
+    .card{
+        padding:40px 24px;
+    }
+
+    .options{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .option{
+        width:100%;
+        max-width:280px;
+    }
 }
 </style>
 </head>
+
 <body>
 
-<h1>PrivAIMin</h1>
-<p>Select a destination</p>
+<div class="card">
+    <h1>SELECT DESTINATION</h1>
+    <div class="line"></div>
 
-<a class="btn"
-href="https://showroom-nuclear-qualifier.ngrok-free.dev">
-Open Website
-</a>
+    <div class="options">
+        <a class="option" href="https://showroom-nuclear-qualifier.ngrok-free.dev">
+            <div class="icon">🌐</div>
+            <span>Website</span>
+        </a>
 
-<a class="btn"
-href="https://github.com/1fatmayz/capstone">
-Open GitHub Repository
-</a>
+        <a class="option active" href="https://github.com/1fatmayz/capstone">
+            <div class="icon">⌘</div>
+            <span>GitHub</span>
+        </a>
+    </div>
+
+    
+
+</div>
 
 </body>
 </html>
