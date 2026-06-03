@@ -12,8 +12,8 @@ Unlike traditional attendance systems, PrivAIMin stores facial embeddings rather
 
 # Authors
 
-Fatma Zainal
-Rand Abubaker
+Fatma Zainal,
+Rand Abubaker,
 Shaima Abuserdaneh
 
 British University in Dubai (BUID)
