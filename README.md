@@ -2,11 +2,11 @@
 
 ## Private AI Attendance Management System
 
-PrivAIMin is an AI-powered attendance management system developed as a capstone project at the British University in Dubai (BUID). The system automates attendance tracking using facial recognition, vector similarity search, and a user-friendly Streamlit web interface.
+PrivAIMin is an AI-powered attendance management system developed as a Capstone Project at the British University in Dubai (BUID). The system automates attendance tracking using facial recognition, vector similarity search, and a user-friendly web interface.
 
-The project combines MTCNN face detection, FaceNet deep facial embeddings, Qdrant vector database technology, and Streamlit to recognize individuals from uploaded images, live camera captures, and group photographs.
+The project combines MTCNN face detection, FaceNet deep facial embeddings, Qdrant vector database technology, and Streamlit to provide a complete attendance management solution capable of recognizing individuals from uploaded images, live camera captures, and group photographs.
 
-Instead of comparing raw images directly, PrivAIMin converts faces into 512-dimensional embeddings and stores them in a vector database. This improves recognition speed, scalability, and privacy.
+Unlike traditional attendance systems, PrivAIMin stores facial embeddings rather than relying on direct image comparison, improving scalability, efficiency, and privacy.
 
 ---
 
@@ -24,51 +24,75 @@ Capstone Project 2026
 
 ---
 
-# Project Features
+# Overview
 
-## Student Enrollment
+PrivAIMin automates attendance recording using facial recognition and vector database retrieval. The system detects faces, generates facial embeddings, compares them against enrolled identities stored in Qdrant, and records attendance automatically.
 
-* Upload student facial images
-* Detect and preprocess faces
+The solution is designed to provide accurate recognition, efficient retrieval, and a scalable architecture suitable for educational and organizational environments.
+
+---
+
+# Features
+
+### Student Enrollment
+
+* Upload facial images
 * Generate FaceNet embeddings
 * Create centroid embeddings from multiple images
-* Store student records in Qdrant
+* Store enrolled identities in Qdrant
 
-## Face Preprocessing
+### Face Preprocessing
 
 * Face detection using MTCNN
-* Facial alignment using landmarks
+* Face alignment using facial landmarks
 * White background enhancement
-* Face normalization
-* Image resizing to 160×160 pixels
+* Image normalization
+* Face resizing to 160×160 pixels
 
-## Face Recognition
+### Face Recognition
 
 * Single-face recognition
 * Group-face recognition
-* Top-K similarity search
-* Threshold-based decision making
 * Unknown face detection
+* Similarity-based matching
+* Top-K retrieval from Qdrant
 
-## Attendance Management
+### Attendance Management
 
 * Automatic attendance logging
 * Attendance history tracking
 * Timestamp recording
-* CSV attendance export
+* Attendance record management
 
-## Dashboard and Analytics
+### Analytics Dashboard
 
-* Attendance statistics
-* Recognition performance metrics
-* Daily attendance summaries
+* Attendance summaries
+* Recognition statistics
 * Attendance trends
+* Performance monitoring
 
-## Manual Verification
+### Manual Verification
 
 * Review recognition results
-* Verify unknown detections
+* Verify uncertain matches
 * Improve attendance reliability
+
+---
+
+# Technologies Used
+
+| Technology                  | Purpose                 |
+| --------------------------- | ----------------------- |
+| Python                      | Core development        |
+| Streamlit                   | Web application         |
+| OpenCV                      | Image processing        |
+| MTCNN                       | Face detection          |
+| FaceNet (InceptionResnetV1) | Face recognition        |
+| PyTorch                     | Deep learning framework |
+| Qdrant                      | Vector database         |
+| NumPy                       | Numerical computations  |
+| Pandas                      | Data analysis           |
+| Scikit-Learn                | Evaluation metrics      |
 
 ---
 
@@ -78,13 +102,13 @@ Capstone Project 2026
 Dataset Images
       │
       ▼
-Face Detection using MTCNN
+Face Detection (MTCNN)
       │
       ▼
 Face Alignment
       │
       ▼
-White Background Processing
+Face Preprocessing
       │
       ▼
 FaceNet Embedding Generation
@@ -107,20 +131,37 @@ Attendance Logging
 
 ---
 
-# Technologies Used
+# Face Recognition Pipeline
 
-| Technology   | Purpose                 |
-| ------------ | ----------------------- |
-| Python       | Core development        |
-| Streamlit    | Web application         |
-| MTCNN        | Face detection          |
-| FaceNet      | Facial recognition      |
-| Qdrant       | Vector database         |
-| OpenCV       | Image processing        |
-| PyTorch      | Deep learning framework |
-| NumPy        | Numerical computation   |
-| Pandas       | Data analysis           |
-| Scikit-Learn | Evaluation metrics      |
+### 1. Face Detection
+
+Faces are detected using the MTCNN deep learning model.
+
+### 2. Face Alignment and Preprocessing
+
+Detected faces are aligned, normalized, enhanced with a white background, and resized to 160×160 pixels.
+
+### 3. Face Embedding Generation
+
+FaceNet generates a 512-dimensional embedding vector representing each face.
+
+### 4. Enrollment
+
+Multiple embeddings belonging to the same person are averaged to create a centroid embedding. The centroid is stored in Qdrant together with identity metadata.
+
+### 5. Recognition
+
+A query image is converted into an embedding and compared against stored vectors using cosine similarity.
+
+### 6. Decision Logic
+
+Recognition decisions are based on:
+
+```text
+Top K = 5
+Recognition Threshold = 0.60
+Gap Threshold = 0.05
+```
 
 ---
 
@@ -139,112 +180,45 @@ Attendance-Face-Detection/
 ├── inspect_embeddings.py
 ├── check_qdrant_dataset.py
 │
-├── my_dataset/
-│   ├── Ahmed/
-│   ├── Fatma/
-│   ├── FYZ/
-│   ├── Khaled Shaalan/
-│   ├── khawla/
-│   ├── Randa/
-│   └── Shaima/
-│
-├── clean_faces_4_white/
-│   ├── Ahmed/
-│   ├── Akshay Kumar/
-│   ├── Alexandra Daddario/
-│   ├── Alia Bhatt/
-│   ├── Amitabh Bachchan/
-│   ├── Andy Samberg/
-│   ├── Anushka Sharma/
-│   ├── Billie Eilish/
-│   ├── Brad Pitt/
-│   ├── Camila Cabello/
-│   ├── Charlize Theron/
-│   ├── Claire Holt/
-│   ├── Courtney Cox/
-│   └── Dwayne Johnson/
-│
-├── attendance_captures/
-│   ├── captured attendance face images
-│
-├── embeddings_out/
-├── extracted_faces_from_group/
-├── qdrant_storage/
-├── attendance_log.csv
-├── 4people.jpeg
-├── 4people2.jpeg
-├── 5people.jpeg
-│
-└── README.md
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
 ---
 
 # Installation
 
-## Clone Repository
+### Clone Repository
 
 ```bash
 git clone https://github.com/1fatmayz/capstone.git
-```
-
-Then open the project folder:
-
-```bash
 cd Attendance-Face-Detection
 ```
 
-If your folder is inside another `capstone` folder, use:
-
-```bash
-cd "C:\Users\ffatm\OneDrive\Desktop\capstone\Attendance-Face-Detection"
-```
-
----
-
-## Create Virtual Environment
+### Create Virtual Environment
 
 ```bash
 python -m venv .venv
 ```
 
----
+### Activate Virtual Environment
 
-## Activate Virtual Environment
-
-### Windows
+Windows:
 
 ```bash
 .venv\Scripts\activate
 ```
 
-### Linux / macOS
+### Install Dependencies
 
 ```bash
-source .venv/bin/activate
-```
-
----
-
-## Install Dependencies
-
-```bash
-pip install streamlit
-pip install opencv-python
-pip install numpy
-pip install pandas
-pip install torch
-pip install facenet-pytorch
-pip install qdrant-client
-pip install pillow
-pip install scikit-learn
+pip install -r requirements.txt
 ```
 
 ---
 
 # Qdrant Setup
-
-Qdrant must be running before enrollment or recognition.
 
 Run Qdrant locally using Docker:
 
@@ -258,7 +232,7 @@ Verify that Qdrant is running:
 http://localhost:6333/dashboard
 ```
 
-The default Qdrant collection used in this project is:
+Default collection:
 
 ```text
 tryface
@@ -266,372 +240,115 @@ tryface
 
 ---
 
-# Preparing the Dataset
+# Running the System
 
-Create a folder called:
-
-```text
-my_dataset/
-```
-
-Inside it, create one folder for each enrolled person.
-
-Example:
-
-```text
-my_dataset/
-│
-├── Ahmed/
-│   ├── image1.jpg
-│   ├── image2.jpg
-│
-├── Fatma/
-│   ├── image1.jpg
-│   ├── image2.jpg
-│
-├── Shaima/
-│   ├── image1.jpg
-│   ├── image2.jpg
-```
-
-The preprocessing script will automatically create:
-
-```text
-clean_faces_4_white/
-```
-
-This folder contains the cleaned and aligned face images used for enrollment and recognition.
-
----
-
-# Step 1 – Face Extraction and Preprocessing
-
-Run:
+### Step 1 – Face Preprocessing
 
 ```bash
 python extract_clean_faces.py
 ```
 
-This script:
-
-* Reads images from `my_dataset/`
-* Detects faces using MTCNN
-* Aligns faces using facial landmarks
-* Applies white background processing
-* Resizes faces to 160×160 pixels
-* Saves processed faces to `clean_faces_4_white/`
-
----
-
-# Step 2 – Enroll Students into Qdrant
-
-Run:
+### Step 2 – Enroll Faces into Qdrant
 
 ```bash
 python savetoFaceDB.py
 ```
 
-This script:
-
-* Loads processed facial images from `clean_faces_4_white/`
-* Generates FaceNet embeddings
-* Creates one centroid embedding per person
-* Stores the centroid vectors in Qdrant
-* Saves metadata such as student name, image path, and number of images used
-
----
-
-# Step 3 – Inspect Stored Qdrant Data
-
-Run:
-
-```bash
-python check_qdrant_dataset.py
-```
-
-This script displays:
-
-* Collection information
-* Total stored records
-* Unique enrolled names
-* Payload keys
-* Sample stored payloads
-
----
-
-# Step 4 – Test Recognition Queries
-
-Run:
-
-```bash
-python queryFaceDB.py
-```
-
-This script:
-
-* Converts query images into embeddings
-* Searches Qdrant
-* Returns Top-K matches
-* Applies threshold and gap logic
-* Prints whether the face is known or unknown
-
-Default settings:
-
-```text
-TOP_K = 5
-Threshold = 0.72
-Gap = 0.05
-```
-
----
-
-# Step 5 – Group Recognition
-
-Run:
-
-```bash
-python recognize_group.py
-```
-
-This script:
-
-* Detects multiple faces in one image
-* Extracts and preprocesses each detected face
-* Generates embeddings
-* Searches Qdrant
-* Labels known and unknown faces
-* Saves cropped faces into `extracted_faces_from_group/`
-* Saves attendance captures into `attendance_captures/`
-
----
-
-# Step 6 – Evaluate System Performance
-
-Run:
-
-```bash
-python evaluate_metrics.py
-```
-
-This script calculates:
-
-* Accuracy
-* Precision
-* Recall
-* F1 Score
-* Confusion Matrix
-
----
-
-# Step 7 – Threshold Optimization
-
-Run:
-
-```bash
-python train_embeddings_threshold.py
-```
-
-This script:
-
-* Generates embeddings from cleaned faces
-* Builds positive and negative face pairs
-* Tests multiple threshold values
-* Helps find the best recognition threshold
-
----
-
-# Launching the Web Application
-
-Before launching the web application, make sure:
-
-1. Qdrant is running.
-2. The virtual environment is activated.
-3. You are inside the correct project folder.
-
-Run:
+### Step 3 – Launch the Web Application
 
 ```bash
 streamlit run app.py
 ```
 
-The application will open on the computer at:
+Open:
 
 ```text
 http://localhost:8501
 ```
 
-If PowerShell shows this error:
-
-```text
-Error: Invalid value: File does not exist: app.py
-```
-
-it means you are not inside the correct folder. Fix it by running:
-
-```bash
-cd "C:\Users\ffatm\OneDrive\Desktop\capstone\Attendance-Face-Detection"
-streamlit run app.py
-```
-
 ---
 
-# Web Application Pages
+# Web Application Modules
 
 ## Dashboard
 
-Displays:
-
-* Attendance statistics
-* Recognition summaries
-* Recent attendance activity
+Displays attendance summaries, statistics, and recognition activity.
 
 ## Live Recognition
 
-Allows:
-
-* Camera capture
-* Image upload
-* Real-time face recognition
-* Attendance registration
+Recognizes individuals from uploaded images or camera captures.
 
 ## Analytics
 
-Displays:
-
-* Attendance trends
-* Daily attendance percentages
-* Recognition statistics
+Displays attendance and recognition performance metrics.
 
 ## Records
 
-Displays:
-
-* Attendance logs
-* Searchable attendance records
-* CSV export functionality
+Displays attendance history and attendance logs.
 
 ## Manual Verification
 
-Allows:
-
-* Reviewing recognition results
-* Managing unknown detections
+Allows review and verification of recognition results.
 
 ## Enroll Student
 
-Allows:
-
-* Adding new students
-* Uploading or capturing student images
-* Saving new face embeddings into Qdrant
+Allows enrollment of new identities into the vector database.
 
 ## Settings
 
-Allows:
-
-* Threshold configuration
-* Top-K configuration
-* Gap configuration
-* Qdrant connection settings
+Allows adjustment of recognition parameters and system configuration.
 
 ---
 
 # Mobile Access
 
-To access the Streamlit app on another device, use the ngrok public link.
-
-First, run the Streamlit app:
+Run Streamlit:
 
 ```bash
 streamlit run app.py
 ```
 
-The Streamlit terminal should show:
-
-```text
-Local URL: http://localhost:8501
-Network URL: http://172.22.1.2:8501
-```
-
-Then open another PowerShell window and run:
+Run ngrok in a separate terminal:
 
 ```bash
 ngrok http 8501
 ```
 
-Ngrok will generate a forwarding link similar to:
+Example public URL:
 
 ```text
 https://showroom-nuclear-qualifier.ngrok-free.dev
 ```
 
-Open the ngrok forwarding link on your phone:
+Use the generated URL on any device with internet access.
+
+---
+
+# Dataset
+
+The project supports datasets organized in person-specific folders.
+
+Example:
 
 ```text
-https://showroom-nuclear-qualifier.ngrok-free.dev
+my_dataset/
+├── Ahmed/
+├── Fatma/
+├── Shaima/
+└── ...
 ```
 
-Do not use `localhost` on your phone because `localhost` only works on the computer running the app.
+The preprocessing pipeline generates aligned facial images that are used for enrollment and recognition.
+
+The project also supports public face datasets and Kaggle face datasets for testing and evaluation purposes.
 
 ---
 
-# Important Running Notes
+# Evaluation Metrics
 
-* Keep the Qdrant terminal running.
-* Keep the Streamlit terminal running.
-* Keep the ngrok terminal running if using mobile access.
-* Run `app.py` only from the correct project folder.
-* If recognition does not work, check that Qdrant contains enrolled students.
-* If no faces are detected, check image quality, lighting, and face angle.
-* If the app cannot show matched images, check that the saved `image_path` exists on the computer.
+The system was evaluated using a facial recognition test dataset.
 
----
-
-# Output Folders
-
-## `clean_faces_4_white/`
-
-Contains cleaned, aligned, and resized face images used for enrollment.
-
-## `attendance_captures/`
-
-Contains face images captured during attendance recognition.
-
-Example saved files:
-
-```text
-20260524_204736_Fatma_face1.jpg
-20260601_143339_Ahmed_face1.jpg
-20260601_143503_Fatma_face1.jpg
-20260601_143503_Randa_face2.jpg
-20260603_130816_Randa_face1.jpg
-```
-
-## `extracted_faces_from_group/`
-
-Contains face crops extracted from group recognition images.
-
-## `embeddings_out/`
-
-Contains embedding analysis outputs generated by threshold training.
-
-## `qdrant_storage/`
-
-Contains local Qdrant-related storage files if Qdrant is configured locally.
-
----
-
-# Performance Results
-
-Evaluation dataset:
-
-* Total Test Images: 760
-* Correct Recognitions: 711
-* Unknown Detections: 49
-
-Performance metrics:
-
-| Metric    | Result  |
+| Metric    | Value   |
 | --------- | ------- |
 | Accuracy  | 93.55%  |
 | Precision | 100.00% |
@@ -640,42 +357,54 @@ Performance metrics:
 
 ---
 
+# Latency and Speed Results
+
+Performance testing was conducted to measure the efficiency of the recognition pipeline.
+
+| Performance Metric          | Result         |
+| --------------------------- | -------------- |
+| Average Embedding Latency   | 274.75 ms      |
+| Average Recognition Latency | 0.25 ms        |
+| Average Total Latency       | 275.01 ms      |
+| Minimum Total Latency       | 122.57 ms      |
+| Maximum Total Latency       | 839.47 ms      |
+| Recognition Speed           | 3.64 faces/sec |
+
+These results demonstrate that the system is capable of near real-time recognition while maintaining high recognition accuracy.
+
+---
+
 # Privacy and Security
 
 PrivAIMin prioritizes privacy by:
 
-* Using facial embeddings instead of raw image comparison
-* Storing vector representations in Qdrant
-* Performing recognition locally
-* Reducing exposure of raw biometric data
-* Supporting controlled enrollment and recognition
+* Using facial embeddings instead of direct image comparison
+* Storing vector representations rather than raw biometric templates
+* Supporting local deployment
+* Reducing exposure of sensitive facial data
 
 ---
 
-# Future Improvements
+# Future Work
 
-* Anti-spoofing protection
+* Anti-spoofing detection
 * Cloud deployment
-* Multi-camera support
 * Mobile application integration
+* Multi-camera recognition
 * Advanced attendance analytics
 * Larger-scale evaluation datasets
 
 ---
 
-# Repository
+# License
 
-GitHub Repository:
-
-```text
-https://github.com/1fatmayz/capstone
-```
+This project was developed for academic and research purposes as part of the BUID Capstone Project 2026.
 
 ---
 
 # Acknowledgements
 
-The authors would like to thank Dr. Ahmed Awad and the British University in Dubai (BUID) for their guidance, support, and supervision throughout the development of this capstone project.
+The authors would like to thank Dr. Ahmed Awad and the British University in Dubai (BUID) for their guidance and support throughout the development of this project.
 
 ---
 
